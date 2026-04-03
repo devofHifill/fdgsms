@@ -9,6 +9,8 @@ services:
       - "27018:27017"
     volumes:
       - mongo_data:/data/db
+    networks:
+      - fdgsms-net
 
   server:
     build: ./server
@@ -19,7 +21,7 @@ services:
     environment:
       PORT: 4000
       MONGO_URI: mongodb://mongodb:27017/fdgsms
-      CLIENT_URL: http://localhost:5174
+      CLIENT_URL: http://76.13.242.148:5175
 
       JWT_SECRET: your_secret_here
       ADMIN_EMAIL: admin@fdgsms.com
@@ -28,9 +30,10 @@ services:
       TWILIO_ACCOUNT_SID: your_sid
       TWILIO_AUTH_TOKEN: your_token
       TWILIO_PHONE_NUMBER: +1XXXXXXXXXX
-
     depends_on:
       - mongodb
+    networks:
+      - fdgsms-net
 
   client:
     build: ./client
@@ -39,10 +42,12 @@ services:
     ports:
       - "5175:3000"
     environment:
-      VITE_API_URL: http://SERVER_IP:4000
+      VITE_API_URL: http://76.13.242.148:5000
     depends_on:
       - server
-      
+    networks:
+      - fdgsms-net
+
 networks:
   fdgsms-net:
     driver: bridge
