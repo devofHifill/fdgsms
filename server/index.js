@@ -27,7 +27,6 @@
 //   console.log(`Server is running at http://localhost:${port}`);
 // });
 
-
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -46,18 +45,30 @@ import { runAutomationCycle } from "./jobs/automationWorker.js";
 import automationSettingsRoutes from "./routes/automationSettingsRoutes.js";
 import systemLogRoutes from "./routes/systemLogRoutes.js";
 
-
-
-
-
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "http://localhost:3000",
+  "http://76.13.242.148:5175",
+  process.env.CLIENT_URL,
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin(origin, callback) {
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error(`CORS blocked for origin: ${origin}`));
+    },
     credentials: true,
   })
 );
@@ -69,10 +80,6 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to FDGSMS backend" });
 });
 
-
-// app.post("/api/contact-import/upload-preview", (req, res) => {
-//   res.json({ ok: true, message: "direct test route works" });
-// });
 app.use("/api/health", healthRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/protected", protectedRoutes);
@@ -86,19 +93,16 @@ app.use("/api/enrollments", enrollmentRoutes);
 app.use("/api/settings", automationSettingsRoutes);
 app.use("/api/logs", systemLogRoutes);
 
-
-
 async function startServer() {
   await connectDB();
 
-
   setInterval(() => {
-  runAutomationCycle();
-}, 15000); // every 15 sec
-
+    runAutomationCycle();
+  }, 15000);
 
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
+    console.log("Allowed CORS origins:", allowedOrigins);
   });
 }
 
