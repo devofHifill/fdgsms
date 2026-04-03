@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: fdgsms-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  server:
+    build: ./server
+    container_name: fdgsms-server
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      PORT: 4000
+      MONGO_URI: mongodb://mongodb:27017/fdgsms
+      CLIENT_URL: http://localhost:5174
+
+      JWT_SECRET: your_secret_here
+      ADMIN_EMAIL: admin@fdgsms.com
+      ADMIN_PASSWORD: ChangeThis123!
+
+      TWILIO_ACCOUNT_SID: your_sid
+      TWILIO_AUTH_TOKEN: your_token
+      TWILIO_PHONE_NUMBER: +1XXXXXXXXXX
+
+    depends_on:
+      - mongodb
+
+  client:
+    build: ./client
+    container_name: fdgsms-client
+    restart: unless-stopped
+    ports:
+      - "5174:3000"
+    environment:
+      VITE_API_URL: http://SERVER_IP:4000
+    depends_on:
+      - server
+
+volumes:
+  mongo_data:
