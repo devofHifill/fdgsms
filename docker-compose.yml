@@ -24,8 +24,8 @@ services:
       CLIENT_URL: http://76.13.242.148:5175
 
       JWT_SECRET: your_secret_here
-      ADMIN_EMAIL: admin@fdgsms.com
-      ADMIN_PASSWORD: ChangeThis123!
+      ADMIN_EMAIL: dev.filldesigngroup@gmail.com
+      ADMIN_PASSWORD: Testnet1@23!
 
       TWILIO_ACCOUNT_SID: your_sid
       TWILIO_AUTH_TOKEN: your_token
