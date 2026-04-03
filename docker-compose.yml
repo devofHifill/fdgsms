@@ -36,17 +36,16 @@ services:
       - fdgsms-net
 
   client:
-    build: ./client
+    build:
+      context: ./client
+      args:
+        VITE_API_URL: http://76.13.242.148:5000
     container_name: fdgsms-client
     restart: unless-stopped
     ports:
       - "5175:3000"
-    environment:
-      VITE_API_URL: http://76.13.242.148:5000
     depends_on:
       - server
-    networks:
-      - fdgsms-net
 
 networks:
   fdgsms-net:

@@ -1,5 +1,8 @@
-const API_BASE = (import.meta.env.VITE_API_URL || "http://localhost:4000").replace(/\/$/, "");
+const API_BASE = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
 
+if (!API_BASE) {
+  throw new Error("VITE_API_URL is not defined");
+}
 export async function apiFetch(path, options = {}) {
   const token = localStorage.getItem("token");
 
