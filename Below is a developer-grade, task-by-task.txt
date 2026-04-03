@@ -87,6 +87,7 @@ valid rows
 invalid rows
  Add confirm import button
  Handle import response
+
 PHASE 4 — Contact Management
 Backend
  Create /api/contacts (GET with pagination)
@@ -99,6 +100,7 @@ Frontend
  Add search input
  Add filters dropdown
  Create Contact detail panel
+
 PHASE 5 — Twilio SMS Sending
 Backend
  Setup Twilio client
@@ -112,6 +114,7 @@ Frontend
  Add "Send Message" input in chat UI
  Call send API
  Append message to chat thread
+
 PHASE 6 — Conversations & Messages
 Backend
  Create Conversation model
@@ -131,6 +134,7 @@ last message
 timestamp
  Load messages on click
  Render chat bubbles
+
 PHASE 7 — Inbound SMS Webhook
 Backend
  Create Twilio webhook endpoint:
@@ -142,6 +146,7 @@ Backend
  Mark conversation as "replied"
  Stop automation (flag contact/enrollment)
  Handle unknown numbers
+
 PHASE 8 — Automation Engine (MVP)
 Backend
 Models
@@ -178,7 +183,7 @@ Frontend
  Implement send button
  Add auto-scroll to latest message
  Add refresh/polling
- 
+
 PHASE 10 — Sequence Tracking
 Backend
  Store currentStep in enrollment
@@ -189,7 +194,7 @@ Frontend
 current step
 status (active/replied/completed)
  Display step tags in chat (optional)
- 
+
 PHASE 11 — Logging & Error Handling
 Backend
  Create SystemLog model
@@ -212,18 +217,24 @@ upload → import → send → reply → stop → manual reply
  Verify Twilio webhook URLs
 
 🚀 PART 1 DONE → DEMO READY SYSTEM
+
+
+
 ✅ PART 2 — ADVANCED SYSTEM CHECKLIST
+
 PHASE 1 — Flexible Campaign System
  Convert fixed 4-message into dynamic sequence array
  Add per-step delay config
  Allow multiple campaigns
  Assign contacts to campaigns
+
 PHASE 2 — Advanced Scheduler & Queue
  Introduce queue system (BullMQ or similar)
  Add rate limiting
  Add random delays
  Add retry logic
  Prevent duplicate sends (locking)
+
 PHASE 3 — Delivery Status Tracking
  Create Twilio status webhook
  Update message status in DB
@@ -231,28 +242,33 @@ PHASE 3 — Delivery Status Tracking
 delivered
 failed
  Show status in UI
+
 PHASE 4 — Opt-Out Compliance
  Detect STOP keywords
  Mark contact as opted_out
  Block future sends
  Add UI badge
  Add manual opt-out toggle
+
 PHASE 5 — Multi-User System
  Create User model
  Add roles (admin, agent)
  Assign conversations
  Add activity logs
+
 PHASE 6 — Advanced Contact Management
  Add tags system
  Add notes system
  Add edit contact feature
  Add duplicate merge logic
  Add export contacts
+
 PHASE 7 — Inbox Enhancements
  Add real-time updates (WebSocket)
  Add message search
  Add filters (unread, replied)
  Add quick reply templates
+
 PHASE 8 — Analytics Dashboard
  Build metrics APIs:
 sent
@@ -261,20 +277,24 @@ replies
 failures
  Add date filters
  Create dashboard UI
+
 PHASE 9 — Template System
  Implement variable replacement
  Add template library
  Add preview before send
+
 PHASE 10 — Monitoring & Logs
  Build logs UI
  Add webhook retry handling
  Add failure dashboard
+
 PHASE 11 — Security & Hardening
  Add rate limiting
  Secure webhooks
  Add input validation
  Improve JWT security
  Add DB indexes
+
 PHASE 12 — Expansion Features
  Add MMS support
  Add campaign cloning
